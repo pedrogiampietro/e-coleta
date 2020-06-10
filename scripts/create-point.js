@@ -56,6 +56,65 @@ document
 
 /* Itens de coleta */
 
+const itemsToCollet = document.querySelectorAll(".items-grid li")
 
+for (const item of itemsToCollet) {
+
+    item.addEventListener('click', handleSelectedItem)
+
+}
+
+const collectedItems = document.querySelector("input[name=items]")
+
+let selectedItems = []
+
+function handleSelectedItem(event) {
+
+    const itemLi = event.target
+
+    // adicionando/removendo uma classe;
+    itemLi.classList.toggle('selected')
+
+    /* 
+    * verificando items selecionados.
+    * se sim pegar os itens selecionados.
+    * se já estiver selecionado tirar da seleção.
+    * se não estiver selecionado, adicionar a seleção.
+    * atualizar o campo escondido com os itens selecionados.
+    */
+
+    const itemId = itemLi.dataset.id
+
+    // verificar se existem itens selecionados, se sim pegar os itens selecionados.
+    const alreadySelected = selectedItems.findIndex( item => {
+
+        const itemFound = item == itemId
+        return itemFound
+
+    })
+
+    // se já estiver selecionado,
+    if ( alreadySelected >= 0 ) {
+    // tirar da seleção.
+        const filteredItems = selectedItems.filter( item => {
+
+            const itemIsDifferent = item != itemId
+
+            return itemIsDifferent
+
+        })
+
+        selectedItems = filteredItems
+
+    } else {
+        // se não estiver selecionado, adicionar á seleção.
+        selectedItems.push(itemId)
+
+    }
+
+        // atualizar o input escondido no html.
+        collectedItems.value = selectedItems
+
+    }
 
 
